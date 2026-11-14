@@ -1,0 +1,44 @@
+set_curve:
+  fields:
+    controller:
+      example: "140808D87208"
+      selector:
+        text:
+    mode:
+      required: true
+      example: 3
+      selector:
+        number:
+          min: 1
+          max: 6
+          mode: box
+    start_speed:
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 10
+          mode: box
+    start_temp:
+      example: 25
+      selector:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: "°C"
+          mode: box
+    max_speed:
+      example: 8
+      selector:
+        number:
+          min: 1
+          max: 10
+          mode: box
+    max_temp:
+      example: 70
+      selector:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: "°C"
+          mode: box

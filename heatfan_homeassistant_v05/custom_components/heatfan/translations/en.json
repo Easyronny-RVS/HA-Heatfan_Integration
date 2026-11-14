@@ -1,0 +1,104 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Heatfan account",
+        "description": "Log in with the account you use in the Heatfan Controller app.",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Log in again",
+        "description": "The password is no longer accepted. Enter your current Heatfan password.",
+        "data": {
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Email or password is incorrect.",
+      "cannot_connect": "Could not connect to the Heatfan cloud.",
+      "no_devices": "No Heatfan controllers found on this account.",
+      "unknown": "Unexpected error. Check the Home Assistant log."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "reauth_successful": "Re-authentication was successful."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "radiator_temperature": {
+        "name": "Radiator temperature"
+      },
+      "fan_speed": {
+        "name": "Fan speed"
+      },
+      "temperature_trend": {
+        "name": "Temperature trend"
+      },
+      "board_temperature": {
+        "name": "Board temperature"
+      },
+      "mcu_temperature": {
+        "name": "MCU temperature"
+      },
+      "wifi_signal": {
+        "name": "Wi-Fi signal"
+      },
+      "last_update": {
+        "name": "Last update"
+      },
+      "firmware_version": {
+        "name": "Firmware version"
+      }
+    },
+    "select": {
+      "mode": {
+        "name": "Mode",
+        "state": {
+          "1": "Mode 1",
+          "2": "Mode 2",
+          "3": "Mode 3",
+          "4": "Mode 4",
+          "5": "Mode 5",
+          "6": "Mode 6 (boost)"
+        }
+      }
+    }
+  },
+  "services": {
+    "set_curve": {
+      "name": "Set mode curve",
+      "description": "Set the temperature and speed range of a mode in one go (like 'Save' in the Heatfan app).",
+      "fields": {
+        "controller": {
+          "name": "Controller ID",
+          "description": "Only needed if you have more than one controller."
+        },
+        "mode": {
+          "name": "Mode",
+          "description": "Mode 1 to 6."
+        },
+        "start_speed": {
+          "name": "Initial speed",
+          "description": "Fan speed (1-10) at the start temperature."
+        },
+        "start_temp": {
+          "name": "Initial temperature",
+          "description": "Temperature (1-100 °C) at which the fan starts."
+        },
+        "max_speed": {
+          "name": "Maximum speed",
+          "description": "Fan speed (1-10) at the maximum temperature."
+        },
+        "max_temp": {
+          "name": "Maximum temperature",
+          "description": "Temperature (1-100 °C) at which the maximum speed is reached."
+        }
+      }
+    }
+  }
+}

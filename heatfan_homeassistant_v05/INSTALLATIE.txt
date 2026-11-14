@@ -1,0 +1,92 @@
+Heatfan voor Home Assistant (onofficieel) - versie 0.4.1
+
+NIEUW IN 0.4.1
+  - Per modus staan de schuifregelaars in de volgorde: beginsnelheid, begintemperatuur,
+    maximumsnelheid, maximumtemperatuur. (Home Assistant sorteert op naam; daarom heet
+    "start" nu "begin".) De entiteit-ID's blijven hetzelfde.
+  - Op de apparaatpagina staat nu: by RVS for Heatfan (Unofficial and Vendor-unsupported)
+
+NIEUW IN 0.4.0
+  - Een eigen kaart met twee schuifregelaars per modus (temperatuur en snelheid),
+    zoals in de Heatfan-app, met Opslaan-knop.
+  - Dienst "heatfan.set_curve" om alle vier de waarden van een modus in een keer te
+    zetten (ook te gebruiken in automatiseringen).
+  - De losse getalvelden zijn nu schuifregelaars.
+
+VEREISTEN
+  - Home Assistant 2026.3 of nieuwer (voor het logo; de rest werkt ook op oudere versies).
+  - Je Heatfan-account (e-mail + wachtwoord uit de Heatfan Controller-app).
+
+INSTALLEREN OF BIJWERKEN, STAP VOOR STAP
+ 1. Pak het zipbestand uit op je computer. Je krijgt de map "custom_components"
+    met daarin de map "heatfan".
+ 2. Zet de map "heatfan" in de configuratiemap van Home Assistant:
+      /config/custom_components/heatfan/
+    Via de Samba-add-on: open in Verkenner  \\homeassistant.local\config
+    (of \\<ip-adres>\config), ga naar de map custom_components (maak hem aan als hij
+    niet bestaat) en kopieer de map "heatfan" erin.
+    Staat er al een oudere versie? VERWIJDER EERST de oude map "heatfan" en plaats
+    daarna de nieuwe, zodat er geen oude bestanden blijven staan.
+    Let op dat er nu ook een submap "frontend" in zit (met heatfan-card.js).
+ 3. Herstart Home Assistant volledig: Instellingen > Systeem > Herstarten.
+ 4. Ververs je browser met Ctrl+F5 (mobiele app: wis de cache van de app).
+    Dit is nodig, anders laadt je browser de nieuwe kaart niet.
+ 5. Eerste installatie: Instellingen > Apparaten en diensten > Integratie toevoegen >
+    "Heatfan" en log in. Bijwerken: je hoeft niets opnieuw in te stellen.
+
+DE KAART TOEVOEGEN AAN EEN DASHBOARD
+ 1. Open een dashboard, klik rechtsboven op het potlood (bewerken).
+ 2. Klik op "Kaart toevoegen" en zoek "Heatfan". (Staat hij er niet? Zie hieronder.)
+ 3. Kies de kaart en klik op Opslaan. Hij herkent je controller zelf.
+ Of via YAML (kaart > "Code-editor weergeven"):
+      type: custom:heatfan-card
+ Optioneel:
+      controller: 140808D87208     # alleen nodig om een bepaalde controller vast te zetten
+      title: Mijn titel
+
+GEBRUIK VAN DE KAART
+  - Kies bovenaan Modus 1 t/m 6. Het groene bolletje laat de actieve modus zien.
+  - Sleep de twee grepen van Temperatuur (1-100 graden) en Snelheid (1-10), of typ de
+    waarden in de vakjes links en rechts.
+  - Klik op Opslaan. Pas dan worden de waarden naar de controller gestuurd.
+  - "Ongedaan maken" zet de wijzigingen terug; "Activeer modus N" maakt die modus actief.
+
+ALS DE KAART NIET VERSCHIJNT ("Custom element doesn't exist: heatfan-card")
+  1. Ververs hard met Ctrl+F5, of probeer een privevenster.
+  2. Controleer of /config/custom_components/heatfan/frontend/heatfan-card.js bestaat.
+  3. Zoek in het logboek (Instellingen > Systeem > Logboeken) naar "Heatfan-kaart".
+  4. Handmatig toevoegen: zet bij je profiel "Geavanceerde modus" aan, ga naar
+     Instellingen > Dashboards > (drie puntjes) > Bronnen > Bron toevoegen:
+        URL:   /heatfan_static/heatfan-card.js
+        Type:  JavaScript-module
+     en ververs daarna met Ctrl+F5.
+
+DE ENTITEITEN
+  - Modus (keuzelijst 1 t/m 6; 6 = boost)
+  - Sensoren: radiatortemperatuur, ventilatorstand, temperatuurtrend
+  - Diagnose: printplaat- en processortemperatuur, wifi-signaal, laatste update, firmware
+  - Per modus 4 schuifregelaars onder "Configuratie" op de apparaatpagina (24 stuks;
+    volgorde per modus: beginsnelheid, begintemperatuur, maximumsnelheid,
+    maximumtemperatuur; schakel ongebruikte uit). Via de kaart is dit handiger.
+
+DIENST heatfan.set_curve (voor automatiseringen)
+      action: heatfan.set_curve
+      data:
+        mode: 3
+        start_temp: 25
+        max_temp: 70
+        start_speed: 1
+        max_speed: 8
+  Je mag een deel van de velden weglaten; de rest blijft zoals het was. Heb je
+  meerdere controllers, geef dan ook  controller: 140808D87208  op.
+
+OPMERKINGEN
+  - Onofficieel: dit praat met dezelfde cloud-database als de Heatfan-app.
+    Past Heatfan hun systeem aan, dan kan het stoppen met werken.
+  - Het wachtwoord wordt in Home Assistant bewaard. Verander je het wachtwoord in
+    de app, koppel de controller dan opnieuw en voer het wachtwoord ook hier in.
+  - Verversen gebeurt elke 30 seconden (const.py > SCAN_INTERVAL).
+  - Logboek bij problemen (configuration.yaml):
+      logger:
+        logs:
+          custom_components.heatfan: debug

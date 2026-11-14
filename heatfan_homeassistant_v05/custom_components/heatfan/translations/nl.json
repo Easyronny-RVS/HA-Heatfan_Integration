@@ -1,0 +1,104 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Heatfan-account",
+        "description": "Log in met het account dat je gebruikt in de Heatfan Controller-app.",
+        "data": {
+          "email": "E-mailadres",
+          "password": "Wachtwoord"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Opnieuw inloggen",
+        "description": "Het wachtwoord wordt niet meer geaccepteerd. Voer je huidige Heatfan-wachtwoord in.",
+        "data": {
+          "password": "Wachtwoord"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "E-mailadres of wachtwoord is onjuist.",
+      "cannot_connect": "Geen verbinding met de Heatfan-cloud.",
+      "no_devices": "Geen Heatfan-controllers gevonden op dit account.",
+      "unknown": "Onverwachte fout. Bekijk het Home Assistant-logboek."
+    },
+    "abort": {
+      "already_configured": "Dit account is al ingesteld.",
+      "reauth_successful": "Opnieuw inloggen is gelukt."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "radiator_temperature": {
+        "name": "Radiatortemperatuur"
+      },
+      "fan_speed": {
+        "name": "Ventilatorstand"
+      },
+      "temperature_trend": {
+        "name": "Temperatuurtrend"
+      },
+      "board_temperature": {
+        "name": "Printplaattemperatuur"
+      },
+      "mcu_temperature": {
+        "name": "Processortemperatuur"
+      },
+      "wifi_signal": {
+        "name": "Wifi-signaal"
+      },
+      "last_update": {
+        "name": "Laatste update"
+      },
+      "firmware_version": {
+        "name": "Firmwareversie"
+      }
+    },
+    "select": {
+      "mode": {
+        "name": "Modus",
+        "state": {
+          "1": "Modus 1",
+          "2": "Modus 2",
+          "3": "Modus 3",
+          "4": "Modus 4",
+          "5": "Modus 5",
+          "6": "Modus 6 (boost)"
+        }
+      }
+    }
+  },
+  "services": {
+    "set_curve": {
+      "name": "Curve van modus instellen",
+      "description": "Stel het temperatuur- en snelheidsbereik van een modus in één keer in (zoals 'Opslaan' in de Heatfan-app).",
+      "fields": {
+        "controller": {
+          "name": "Controller-ID",
+          "description": "Alleen nodig als je meer dan één controller hebt."
+        },
+        "mode": {
+          "name": "Modus",
+          "description": "Modus 1 tot 6."
+        },
+        "start_speed": {
+          "name": "Beginsnelheid",
+          "description": "Ventilatorstand (1-10) bij de starttemperatuur."
+        },
+        "start_temp": {
+          "name": "Begintemperatuur",
+          "description": "Temperatuur (1-100 °C) waarbij de ventilator begint."
+        },
+        "max_speed": {
+          "name": "Maximumsnelheid",
+          "description": "Ventilatorstand (1-10) bij de maximumtemperatuur."
+        },
+        "max_temp": {
+          "name": "Maximumtemperatuur",
+          "description": "Temperatuur (1-100 °C) waarbij de maximumsnelheid wordt bereikt."
+        }
+      }
+    }
+  }
+}
